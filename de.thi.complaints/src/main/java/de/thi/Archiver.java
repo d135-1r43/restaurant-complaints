@@ -22,6 +22,6 @@ public class Archiver
 	{
 		Complaint complaint = new Complaint(complaintText, responseText, sentiment);
 		complaintRepository.persist(complaint);
-		LOG.info("Complaint successfully persisted");
+		LOG.info("Complaint '{}' successfully persisted", complaintText);
 	}
 }
