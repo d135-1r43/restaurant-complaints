@@ -8,6 +8,21 @@ The application includes three services:
 2. **Sentiment Analysis Service** (`de.thi.sentiment`): A Quarkus service that assesses the sentiment of the complaint. For simplicity, this demo uses a basic user task, but in a real-world scenario, a more advanced tool like ChatGPT could be used.
 3. **Archive Service** (`de.thi.archiv`, optional): A Quarkus service with a simple REST API to store complaints. This service can be integrated into the Complaints Service.
 
+## Prior Knowledge
+
+To understand this walkthrough you should already be able to:
+
+* Open and edit Kogito BPMN in VS Code and run a simple Kogito Quarkus app, as described at [Installing the Kogito VSCode extension bundle without the Kogito Business Modeler Hub](https://docs.jboss.org/kogito/release/1.35.0/html_single/#proc-kogito-vscode-extension_kogito-creating-running)
+* Understand the basics BPMN and the Process Driven Approach
+* Start a Kogito process with the Swagger UI and perform User Tasks in the Dev UIs. 
+
+You must
+
+* have Docker running
+* have a working developer environment for Java 17 with Maven and an IDE of your choice (VS Code preferred)
+
+## Walkthrough
+
 ![Complaint Business Process](/documentation/complaints-process.png)
 
 👉 Open the file https://github.com/d135-1r43/restaurant-complaints/blob/master/de.thi.complaints/src/main/resources/complaints.bpmn in VS Code and analyse the properties of the process, especially the process variables under 'Process Data' to get a better understanding. 
