@@ -1,4 +1,4 @@
-# Simplified PDA Demo Application Overview
+# Kogito/Quarkus PDA Example: Restaurant Complaints
 
 This repository contains a basic Process Driven Applications (PDA) demo application created using [Quarkus](https://quarkus.io) and the [Kogito](https://kogito.kie.org/) process engine. The purpose of this demo is to demonstrate key concepts of Process Driven Applications.
 
