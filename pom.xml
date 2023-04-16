@@ -14,5 +14,6 @@
     <modules>
         <module>de.thi.complaints</module>
         <module>de.thi.sentiment</module>
+        <module>de.thi.archive</module>
     </modules>
 </project>
