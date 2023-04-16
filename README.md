@@ -48,10 +48,29 @@ In order for Kogito to use Quarkus, we have some dependencies in our `pom.xml`:
 </dependency>
 ``` 
 
-That is enough for the magic to happen: 'Ask for Sentiment' will create a Kafka event with the standard [Cloudevents.io](https://cloudevents.io/). This event will be sent to the Microprofile messaging channel `text`, which is defined as a Kafka channel in our `application.properties`. 
+That is enough for the magic to happen: 'Ask for Sentiment' will create a Kafka event with the standard [Cloudevents.io](https://cloudevents.io/). This event will be sent to the Microprofile messaging channel `text`, which is defined as a Kafka channel in our `application.properties`. If you run Quarkus in Dev mode, it will start a Kafka automatically as a Dev Service. Also, if you start another Quarkus service in Dev mode, it will connect to the same Kafka. Learn more about Dev Services at [Dev Services Overview](https://quarkus.io/guides/dev-services).
 
 https://github.com/d135-1r43/restaurant-complaints/blob/d0aa264fafdbdfcc280c4476f4f5bf2f8d2a2002/de.thi.complaints/src/main/resources/application.properties#L6-L12
 
 👉 Analyze the `application.properties` and understand on which topic the BPMN event will be sent to. In the Dev UI, look for the Kafka UI and try to find your cloud event. Understand, what has happenend. Also, try to add a random event with the plus button. 
 
 ![Kafka UI](/documentation/complaints-kafka.png)
+
+The **Sentiment Analysis Service** (`de.thi.sentiment`) will implement the sentiment analysis. For the sake of simplicity, it is just a User Task to type in a value between 0 and 10. 
+
+👉 Open the BPMN https://github.com/d135-1r43/restaurant-complaints/blob/master/de.thi.sentiment/src/main/resources/sentiment.bpmn in VS Code. Understand the BPMN, analyze the variables and the properties of the start event, the user task and the end event. 
+
+👉 Start the **Sentiment Analysis Service** and understand that it connects to the same Kafka Dev Service and to the same [Kogito Data Index Dev Service](https://quarkus.io/guides/kogito-dev-services). Open its Dev UI at http://localhost:8081/q/dev.
+
+![Sentiment Process](/documentation/sentiment-process.png)
+
+We want the Sentiment process to start at the event. So we have to make sure…
+
+* that 'Get Text' is a Message Start event
+* that it has the same message name under 'Implementation/Execution' as the corresponding Intermediate Throw Event
+* that the mapping of the variables under 'Data Assignment' makes sense
+* that we configure the topic correctly in the `application.properties`. The incoming channel has the key `mp.messaging.incoming.kogito_incoming_stream`, the outgoing is called `mp.messaging.outgoing.kogito_outgoing_stream`. 
+
+https://github.com/d135-1r43/restaurant-complaints/blob/de8794ef3f2f8a2ea452f5798cd7342eb49a4c9c/de.thi.sentiment/src/main/resources/application.properties#L4-L10
+
+👉 Make a complaint at the **Complaints Service** via Swagger UI. Switch to the **Sentiment Analysis Service** and run the user task to define the sentiment in the Dev UI. Understand why and how now the **Complaints Service** will catch the event at 'Get Sentiment'. Use the log files, the Kafka UI and the Kogito Management Console to deepen your understanding. 
