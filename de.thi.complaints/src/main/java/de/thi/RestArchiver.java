@@ -2,6 +2,8 @@ package de.thi;
 
 import de.thi.jpa.Complaint;
 import de.thi.jpa.ComplaintRepository;
+import de.thi.rest.ComplaintRestClient;
+import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,18 +12,18 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 
 @ApplicationScoped
-public class Archiver
+public class RestArchiver
 {
-	private static final Logger LOG = LoggerFactory.getLogger(Archiver.class);
+	private static final Logger LOG = LoggerFactory.getLogger(RestArchiver.class);
 
 	@Inject
-	ComplaintRepository complaintRepository;
+	@RestClient
+	ComplaintRestClient complaintRestClient;
 
-	@Transactional
 	public void archive(String complaintText, String responseText, Integer sentiment)
 	{
 		Complaint complaint = new Complaint(complaintText, responseText, sentiment);
-		complaintRepository.persist(complaint);
-		LOG.info("Complaint '{}' successfully persisted", complaintText);
+		complaintRestClient.post(complaint);
+		LOG.info("Complaint '{}' successfully POSTed", complaintText);
 	}
 }
