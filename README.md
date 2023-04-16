@@ -80,13 +80,15 @@ The **Complaints Service** will ask for a response in a user task and, if the se
 * **External: REST** (https://github.com/d135-1r43/restaurant-complaints/blob/master/de.thi.complaints/src/main/resources/archiverest.bpmn): Archive the complaint at another service (**Archive Service** `de.thi.archiv`) via REST. In order for this to work, that third service has to run. 
 * **Internal: Database** (https://github.com/d135-1r43/restaurant-complaints/blob/master/de.thi.complaints/src/main/resources/archivedb.bpmn)
 
-👉 Open `complaint.bpmn` and understand which call activity (REST or DB) is used. Run the complaint. Switch the call activity and experiment. Try to assert after the process, that the complaint has been saved either in the **Archive Service** or in the internal database.
+👉 Open `complaint.bpmn` and understand which call activity (REST or DB) is used. Run the complaint. Switch the call activity and experiment. Try to assert after the process, that the complaint has been saved either in the **Archive Service** or in the internal database. Understand, how the parameters are assigend from the process to the Java class. 
 
 <img width="681" alt="image" src="https://user-images.githubusercontent.com/545499/232325339-98ce1b2f-b0c7-4e45-ba09-c2f9ae6b4487.png">
 
+ℹ️ Under the hood, Kogito generates Java classes for each process. That is why the filename, the id and the name should not contain special characters. 
+
 ### Understanding the external REST service
 
-**Archive Service** is a very simple REST service. It basically follows the guide at [Simplified Hibernate ORM with Panache ](https://quarkus.io/guides/hibernate-orm-panache). It uses a Postgres to store the complaints. It starts at http://localhost:8082/q/swagger-ui/.
+**Archive Service** is a very simple REST service. It basically follows the guide at [Simplified Hibernate ORM with Panache](https://quarkus.io/guides/hibernate-orm-panache). It uses a Postgres to store the complaints. It starts at http://localhost:8082/q/swagger-ui/.
 
 So how does the **Complaints Service** make the REST request? The magic happens in two classes. 
 
@@ -101,3 +103,25 @@ https://github.com/d135-1r43/restaurant-complaints/blob/280c5c4a1326f370487a97ac
 The class `RestArchiver` serves as the Java implementation of the Service Task in the process. 
 
 https://github.com/d135-1r43/restaurant-complaints/blob/280c5c4a1326f370487a97ac86a79139851b7e6f/de.thi.complaints/src/main/java/de/thi/RestArchiver.java#L14-L29
+
+We are using RESTAssured, a nice test framework, to write unit tests against the REST service. Have a look at `ComplaintResourceTests.java`.
+
+https://github.com/d135-1r43/restaurant-complaints/blob/59d51b82cd3432f1fb97c7e36808bc8913316acd/de.thi.archive/src/test/java/de/thi/complaints/archive/ComplaintResourceTests.java#L48-L70
+
+👉 Run the unit tests in your IDE. Write a third unit test to understand how testing REST APIs works. 
+
+### Understanding the internal database
+
+The alternative call activity `archivedb.bpmn` will not call an external service, yet it will save the complaint inside of the **Complaints Service**. It uses (like the **Archive Service**) [Hibernate Panache](https://quarkus.io/guides/hibernate-orm-panache), based on the [JPA](https://www.baeldung.com/learn-jpa-hibernate) standard. 
+
+👉 Find out if we are using the Repository pattern or the Active Record pattern by analyzing the code starting from `DbArchiver.java`. 
+
+## Testing the processes with JUnit
+
+At the end of the day, the process itself must be tested as well. It is best practice to test each Service Task individually and only do a rough integration test against the process. 
+
+An example of such an integration test is `ArchiveProcessTests.java`. 
+
+https://github.com/d135-1r43/restaurant-complaints/blob/59d51b82cd3432f1fb97c7e36808bc8913316acd/de.thi.complaints/src/test/java/de/thi/ArchiveProcessTests.java#L24-L57
+
+👉 Run the test. Understand how you can inject the process and how to start it in the test. Understand, how the start parameters are provided. 
