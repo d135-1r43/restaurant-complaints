@@ -14,34 +14,32 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
-@Path("/complaints/")
+@Path("/complaints/") // Root Path für die ganze Klasse
 public class ComplaintResource
 {
-	@Inject
+	@Inject // Kommt über das Pattern Inversion of Control
 	ComplaintRepository complaintRepository;
 
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
+	@GET // GET Endpunkt
+	@Produces(MediaType.APPLICATION_JSON) // mach mir n JSON und kein doofes XML
 	public List<Complaint> all()
 	{
-		return complaintRepository.listAll()
-			.stream()
-			.toList();
+		return complaintRepository.listAll(); // hol alle aus der DB
 	}
 
-	@GET
-	@Path("{id}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Complaint byId(@PathParam("id") Long id)
+	@GET // GET Endpunkt
+	@Path("{id}") // ... mit der ID im Pfad
+	@Produces(MediaType.APPLICATION_JSON) // mach mir n JSON und kein doofes XML
+	public Complaint byId(@PathParam("id") Long id) // gib mir die ID als Parameter, dass ich sie in der Methode nutzen kann
 	{
-		return complaintRepository.findById(id);
+		return complaintRepository.findById(id); // finde mir das Ding mit genau dieser ID
 	}
 
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Transactional
-	public void post(Complaint complaint)
+	@POST // POST Endpunkt
+	@Consumes(MediaType.APPLICATION_JSON) // nimm n JSON und kein doofes XML
+	@Transactional // mach bitte ne Datenbank-Transaktion außenrum
+	public void post(Complaint complaint) // automagisch der Body
 	{
-		complaintRepository.persist(complaint);
+		complaintRepository.persist(complaint); // speichert das Ding in der DB
 	}
 }
