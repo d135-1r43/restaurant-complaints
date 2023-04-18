@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class ArchiveProcessTests
 {
 	@Inject
-	@Named("archive")
+	@Named("archivedb")
 	Process<? extends Model> archiveProcess;
 
 	@Inject
