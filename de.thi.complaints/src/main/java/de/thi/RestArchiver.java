@@ -23,6 +23,6 @@ public class RestArchiver
 	{
 		Complaint complaint = new Complaint(complaintText, responseText, sentiment);
 		complaintRestClient.post(complaint);
-		LOG.info("Complaint '{}' successfully POSTed", complaintText);
+		LOG.info("Complaint '{}' successfully posted", complaintText);
 	}
 }
