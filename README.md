@@ -95,7 +95,7 @@ The **Complaints Service** will ask for a response in a user task and, if the se
 * **External: REST** (https://github.com/d135-1r43/restaurant-complaints/blob/master/de.thi.complaints/src/main/resources/archiverest.bpmn): Archive the complaint at another service (**Archive Service** `de.thi.archiv`) via REST. In order for this to work, that third service has to run. 
 * **Internal: Database** (https://github.com/d135-1r43/restaurant-complaints/blob/master/de.thi.complaints/src/main/resources/archivedb.bpmn)
 
-👉 Open `complaint.bpmn` and understand which call activity (REST or DB) is used. Run the complaint. Switch the call activity and experiment. Try to assert after the process, that the complaint has been saved either in the **Archive Service** or in the internal database. Understand, how the parameters are assigend from the process to the Java class. 
+👉 Open `complaints.bpmn` and understand which call activity (REST or DB) is used. Run the complaint. Switch the call activity and experiment. Try to assert after the process, that the complaint has been saved either in the **Archive Service** or in the internal database. Understand, how the parameters are assigend from the process to the Java class. 
 
 <img width="681" alt="image" src="https://user-images.githubusercontent.com/545499/232325339-98ce1b2f-b0c7-4e45-ba09-c2f9ae6b4487.png">
 
@@ -133,7 +133,9 @@ The alternative call activity `archivedb.bpmn` will not call an external service
 
 ## Testing the processes with JUnit
 
-At the end of the day, the process itself must be tested as well. It is best practice to test each Service Task individually and only do a rough integration test against the process. 
+ℹ️ Testing with unit tests allows us to make sure that specific parts of the works and to identify the source of errors early on.
+
+At the end of the day, the process itself must be tested as well. It is best practice to test each Service Task individually and only do a rough integration test against the process.
 
 An example of such an integration test is `ArchiveProcessTests.java`. 
 
