@@ -12,6 +12,6 @@ public class SendResponse
 
 	public void sendResponse(String response)
 	{
-        LOG.info("Response sent to Guest");
+        LOG.info("Response sent to Guest" +  response);
 	}
 }
