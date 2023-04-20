@@ -19,7 +19,7 @@ public class GetSentimentFromChatGPT {
 
     private static final Logger LOG = LoggerFactory.getLogger(GetSentimentFromChatGPT.class);
 
-    public void getSentimentFromChatGPT(String text){
+    public Integer getSentimentFromChatGPT(String text){
         ComplaintRequest complaintRequest = new ComplaintRequest();
         complaintRequest.setModel("gpt-3.5-turbo");
         Map<String, String> messages = new HashMap<String, String>();
@@ -29,6 +29,9 @@ public class GetSentimentFromChatGPT {
 
         LOG.info("Task successfully triggered. Text: " + complaintRequest);
         chatGPTRestClient.post(complaintRequest, "Bearer {{API_KEY}}");
+
+        // FIXME
+        return Integer.valueOf(0);
     }
 
 }
