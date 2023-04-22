@@ -4,6 +4,8 @@ import com.theokanning.openai.completion.CompletionChoice;
 import com.theokanning.openai.completion.CompletionRequest;
 import com.theokanning.openai.service.OpenAiService;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -11,6 +13,8 @@ import javax.inject.Inject;
 @ApplicationScoped
 public class AiSentiment
 {
+	private static final Logger LOG = LoggerFactory.getLogger(AiSentiment.class);
+
 	@Inject
 	ChatGPTPromptCrafter promptCrafter;
 
@@ -35,7 +39,7 @@ public class AiSentiment
 			.presencePenalty(0d)
 			.build();
 
-		return new OpenAiService(openAiApiKey)
+		Integer sentiment = new OpenAiService(openAiApiKey)
 			.createCompletion(completionRequest)
 			.getChoices()
 			.stream()
@@ -44,5 +48,9 @@ public class AiSentiment
 			.map(String::trim)
 			.map(Integer::valueOf)
 			.orElseThrow(() -> new RuntimeException("Could not determine sentiment with ChatGPT"));
+
+		LOG.info("OpenAI determined a sentiment of {}", sentiment);
+
+		return sentiment;
 	}
 }
