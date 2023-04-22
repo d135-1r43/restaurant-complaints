@@ -5,7 +5,7 @@ This repository contains a basic Process Driven Applications (PDA) demo applicat
 The application includes three services:
 
 1. **Complaints Service** (`de.thi.complaints`): A Quarkus service that handles restaurant complaint submissions.
-2. **Sentiment Analysis Service** (`de.thi.sentiment`): A Quarkus service that assesses the sentiment of the complaint. For simplicity, this demo uses a basic user task, but in a real-world scenario, a more advanced tool like ChatGPT could be used.
+2. **Sentiment Analysis Service** (`de.thi.sentiment`): A Quarkus service that assesses the sentiment of the complaint. It uses OpenAI (ChatGPT) and a User Task as a fallback. 
 3. **Archive Service** (`de.thi.archiv`, optional): A Quarkus service with a simple REST API to store complaints. This service can be integrated into the Complaints Service.
 
 ## Prior Knowledge
@@ -37,9 +37,9 @@ The Complaint Process uses several best-practice patterns. Let's have a look at 
 
 ℹ️ Sentiment Analysis is the process of analyzing digital text to determine if the emotional tone of the message is positive, negative, or neutral. In our case, we have a scale from 0 'very angry' to 10 'extremly happy'. 
 
-In 'Ask for Sentiment' the process will throw a message and will immediately wait for the returned message in 'Get Sentiment'. The process is agnostic of the actual implementation. The sentiment definition could be done manually or via an NLP -- the process simply does not care. 
+In 'Ask for Sentiment' the process will throw a message and will immediately wait for the returned message in 'Get Sentiment'. The process is agnostic of the actual implementation. The sentiment definition is done by OpenAI. There is an event listener on an error event, in that case a user task is started. As there is no API key for OpenAI defined on default, the User Task will always be triggered. 
 
-To achieve this kind of decoupling, we will have to define several things:
+To achieve decoupling, we will have to define several things:
 
 * In 'Ask for Sentiment' we will have to define a message. We do this in the BPMN editor UI and enter the free text name `text` in the field 'Message' in the dropdown 'Implementation/Execution'.
 * In 'Data Assignments' we will define the variable `complaintText` to be assigned to the message. 
@@ -87,6 +87,8 @@ We want the Sentiment process to start at the event. So we have to make sure…
 https://github.com/d135-1r43/restaurant-complaints/blob/de8794ef3f2f8a2ea452f5798cd7342eb49a4c9c/de.thi.sentiment/src/main/resources/application.properties#L4-L10
 
 👉 Make a complaint at the **Complaints Service** via Swagger UI. Switch to the **Sentiment Analysis Service** and run the user task to define the sentiment in the Dev UI. Understand why and how now the **Complaints Service** will catch the event at 'Get Sentiment'. Use the log files, the Kafka UI and the Kogito Management Console to deepen your understanding. 
+
+👉 Configure an OpenAI API key under the config `openai.api.key` and rerun the process. Now the sentiment will be determined by OpenAI. Understand the Java Code that runs the Completion Request agains OpenAI. 
 
 ## Synchronous Implementation of Archiving the Complaints
 
