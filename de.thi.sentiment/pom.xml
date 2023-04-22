@@ -103,6 +103,13 @@
             <artifactId>kogito-addons-quarkus-data-index-infinispan</artifactId>
         </dependency>
 
+        <!-- third party -->
+        <dependency>
+            <groupId>com.theokanning.openai-gpt3-java</groupId>
+            <artifactId>service</artifactId>
+            <version>0.12.0</version>
+        </dependency>
+
         <!-- test -->
         <dependency>
             <groupId>io.quarkus</groupId>

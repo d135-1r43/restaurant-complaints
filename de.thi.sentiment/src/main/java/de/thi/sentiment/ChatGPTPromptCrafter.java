@@ -1,5 +1,8 @@
 package de.thi.sentiment;
 
+import javax.enterprise.context.ApplicationScoped;
+
+@ApplicationScoped
 public class ChatGPTPromptCrafter
 {
 	public String craftPrompt(String text)
