@@ -50,7 +50,6 @@ public class AiSentiment
 			.orElseThrow(() -> new RuntimeException("Could not determine sentiment with ChatGPT"));
 
 		LOG.info("OpenAI determined a sentiment of {}", sentiment);
-
 		return sentiment;
 	}
 }
