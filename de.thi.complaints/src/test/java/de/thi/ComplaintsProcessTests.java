@@ -17,32 +17,31 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @QuarkusTest
-public class ComplaintsProcessTests{
+public class ComplaintsProcessTests
+{
+	@Inject
+	@Named("complaints")
+	Process<? extends Model> complaintsProcess;
 
-    @Inject
-    @Named("complaints")
-    Process<? extends Model> complaintsProcess;
+	@Test
+	public void shouldStartProcess()
+	{
+		//given
+		assertNotNull(complaintsProcess);
 
-    @Test
-    public void shouldSendCloudEvent(){
+		Map<String, Object> parameters = new HashMap<>();
+		parameters.put("complaintText", "Too much salt.");
 
-        //given
-        assertNotNull(complaintsProcess);
+		Model model = complaintsProcess.createModel();
+		model.fromMap(parameters);
 
-        Map<String, Object> parameters = new HashMap<>();
-        parameters.put("complaintText", "Too much salt.");
+		ProcessInstance<?> processInstance = complaintsProcess.createInstance(model);
 
-        Model model = complaintsProcess.createModel();
-        model.fromMap(parameters);
+		//when
+		processInstance.start();
 
-        ProcessInstance<?> processInstance = complaintsProcess.createInstance(model);
-
-        //when
-        processInstance.start();
-
-        //then
-        assertEquals(ProcessInstance.STATE_ACTIVE, processInstance.status());
-        assertEquals("Get Sentiment", ((BaseEventDescription)processInstance.events().toArray()[0]).getNodeName());
-    }
-
+		//then
+		assertEquals(ProcessInstance.STATE_ACTIVE, processInstance.status());
+		assertEquals("Get Sentiment", ((BaseEventDescription)processInstance.events().toArray()[0]).getNodeName());
+	}
 }
