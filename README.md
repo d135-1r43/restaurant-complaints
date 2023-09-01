@@ -8,6 +8,9 @@ The application includes three services:
 2. **Sentiment Analysis Service** (`de.thi.sentiment`): A Quarkus service that assesses the sentiment of the complaint. It uses OpenAI (ChatGPT) and a User Task as a fallback. 
 3. **Archive Service** (`de.thi.archiv`, optional): A Quarkus service with a simple REST API to store complaints. This service can be integrated into the Complaints Service.
 
+🗣️ I have showcased this project at a Meetup of the Quarkus User Group Munich on Aug. 31st 2023. The accompanying slides are available here: [meetup-kogito.pdf](https://github.com/d135-1r43/restaurant-complaints/files/12494990/meetup-kogito.pdf)
+
+
 ## Prior Knowledge
 
 To understand this walkthrough you should already be able to:
