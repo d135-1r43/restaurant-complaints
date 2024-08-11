@@ -82,7 +82,7 @@
         <dependency>
             <groupId>org.jbpm</groupId>
             <artifactId>jbpm-quarkus</artifactId>
-            <version>999-SNAPSHOT</version>
+            <version>${version.org.kie.kogito}</version>
         </dependency>
         <dependency>
             <groupId>org.kie</groupId>
@@ -104,6 +104,11 @@
             <artifactId>kie-addons-quarkus-messaging</artifactId>
             <version>${version.org.kie.kogito}</version>
         </dependency>
+        <!-- dependency> This is most probable not compatible with the incubation API yet
+            <groupId>org.kie.kogito</groupId>
+            <artifactId>runtime-tools-quarkus-extension</artifactId>
+            <version>2.44.0.Alpha</version>
+        </dependency -->
         <dependency>
             <groupId>org.jbpm</groupId>
             <artifactId>jbpm-addons-quarkus-task-management</artifactId>
