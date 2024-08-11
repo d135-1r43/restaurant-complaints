@@ -1,14 +1,12 @@
 package de.thi;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-
+import de.thi.jpa.Complaint;
+import de.thi.rest.ComplaintRestClient;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import de.thi.jpa.Complaint;
-import de.thi.rest.ComplaintRestClient;
 
 @ApplicationScoped
 public class RestArchiver

@@ -2,12 +2,11 @@ package de.thi;
 
 import de.thi.jpa.Complaint;
 import de.thi.jpa.ComplaintRepository;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.transaction.Transactional;
 
 @ApplicationScoped
 public class DbArchiver
