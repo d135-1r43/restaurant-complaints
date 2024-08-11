@@ -14,7 +14,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
         <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
-        <quarkus.platform.version>3.8.4</quarkus.platform.version>
+        <quarkus.platform.version>3.13.2</quarkus.platform.version>
         <version.org.kie.kogito>999-SNAPSHOT</version.org.kie.kogito>
         <skipITs>true</skipITs>
         <surefire-plugin.version>3.0.0-M7</surefire-plugin.version>
@@ -43,11 +43,11 @@
         <!-- quarkus -->
         <dependency>
             <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-resteasy</artifactId>
+            <artifactId>quarkus-rest</artifactId>
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-resteasy-jackson</artifactId>
+            <artifactId>quarkus-rest-jackson</artifactId>
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
@@ -63,7 +63,7 @@
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-smallrye-reactive-messaging-kafka</artifactId>
+            <artifactId>quarkus-messaging-kafka</artifactId>
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
@@ -82,27 +82,22 @@
         <dependency>
             <groupId>org.jbpm</groupId>
             <artifactId>jbpm-quarkus</artifactId>
-            <version>${version.org.kie.kogito}</version>
         </dependency>
         <dependency>
             <groupId>org.kie</groupId>
             <artifactId>kie-addons-quarkus-process-svg</artifactId>
-            <version>${version.org.kie.kogito}</version>
         </dependency>
         <dependency>
             <groupId>org.kie</groupId>
             <artifactId>kie-addons-quarkus-process-management</artifactId>
-            <version>${version.org.kie.kogito}</version>
         </dependency>
         <dependency>
             <groupId>org.kie</groupId>
             <artifactId>kie-addons-quarkus-source-files</artifactId>
-            <version>${version.org.kie.kogito}</version>
         </dependency>
         <dependency>
             <groupId>org.kie</groupId>
             <artifactId>kie-addons-quarkus-messaging</artifactId>
-            <version>${version.org.kie.kogito}</version>
         </dependency>
         <!-- dependency> This is most probable not compatible with the incubation API yet
             <groupId>org.kie.kogito</groupId>
@@ -112,7 +107,6 @@
         <dependency>
             <groupId>org.jbpm</groupId>
             <artifactId>jbpm-addons-quarkus-task-management</artifactId>
-            <version>${version.org.kie.kogito}</version>
         </dependency>
 
         <!-- test -->
@@ -198,7 +192,8 @@
             </activation>
             <properties>
                 <skipITs>false</skipITs>
-                <quarkus.package.type>native</quarkus.package.type>
+                <quarkus.native.enabled>true</quarkus.native.enabled>
+                <quarkus.package.jar.enabled>false</quarkus.package.jar.enabled>
             </properties>
         </profile>
     </profiles>
