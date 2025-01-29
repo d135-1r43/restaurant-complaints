@@ -92,6 +92,18 @@
             <groupId>org.kie</groupId>
             <artifactId>kie-addons-quarkus-messaging</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>kie-addons-quarkus-events-process</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>kogito-addons-quarkus-jobs-management</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jbpm</groupId>
+            <artifactId>jbpm-with-drools-quarkus</artifactId>
+        </dependency>
         <!-- dependency> This is most probable not compatible with the incubation API yet
             <groupId>org.kie.kogito</groupId>
             <artifactId>runtime-tools-quarkus-extension</artifactId>
